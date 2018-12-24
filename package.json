@@ -1,9 +1,9 @@
 {
-    "name": "block-travel",
-    "displayName": "Block Travel",
-    "description": "Navigate by code 'paragraph'!",
+    "name": "block-travel-plus",
+    "displayName": "Block Travel Plus",
+    "description": "Navigate by code 'paragraph'! and skip the empty line",
     "version": "0.0.2",
-    "publisher": "sashaweiss",
+    "publisher": "cyanted",
     "engines": {
         "vscode": "^1.10.0"
     },

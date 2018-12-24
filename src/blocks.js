@@ -9,9 +9,19 @@ function emptyLineBelow(editor) {
     const document = editor.document
     var line = editor.selection.active.line
 
-    max = document.lineCount - 1
-    while (line < max && !document.lineAt(++line).isEmptyOrWhitespace) {}
+    
 
+    max = document.lineCount - 1
+    if (line < max)
+    {
+        if (document.lineAt(line).isEmptyOrWhitespace != document.lineAt(line + 1).isEmptyOrWhitespace)
+            line = line + 1
+
+        if (!document.lineAt(line).isEmptyOrWhitespace)
+            while (line < max && !document.lineAt(++line).isEmptyOrWhitespace) { } // find for empty
+        else
+            while (line < max && document.lineAt(++line).isEmptyOrWhitespace) { } // find for non-empty
+    }
     return document.lineAt(line)
 }
 
@@ -25,8 +35,15 @@ function emptyLineAbove(editor) {
     var line = editor.selection.active.line
 
     min = 0
-    while (line > min && !document.lineAt(--line).isEmptyOrWhitespace) {}
-
+    if(line > min)
+    {
+        if (document.lineAt(line).isEmptyOrWhitespace != document.lineAt(line - 1).isEmptyOrWhitespace)
+            line = line - 1
+        if (!document.lineAt(line).isEmptyOrWhitespace)
+            while (line > min && !document.lineAt(--line).isEmptyOrWhitespace) { }
+        else
+            while (line > min && document.lineAt(--line).isEmptyOrWhitespace) { }
+        }
     return document.lineAt(line)
 }
 
@@ -60,7 +77,7 @@ function changeActiveSelect(editor, newPosn) {
  */
 function blockTravelDown(editor) {
     const line = emptyLineBelow(editor)
-    const newPosn = new vscode.Position(line.lineNumber, line.text.length) // End of line, in case is last line
+    const newPosn = new vscode.Position(line.lineNumber, 0) // End of line, in case is last line
     changeActive(editor, newPosn)
 }
 
@@ -70,7 +87,7 @@ function blockTravelDown(editor) {
  */
 function blockSelectDown(editor) {
     const line = emptyLineBelow(editor)
-    const newPosn = new vscode.Position(line.lineNumber, line.text.length) // End of line, in case is last line
+    const newPosn = new vscode.Position(line.lineNumber, 0) // End of line, in case is last line
     changeActiveSelect(editor, newPosn)
 }
 
